@@ -111,9 +111,6 @@ class LearningAgent(Agent):
 
         return qs
 
-    def stringify(self, state):
-        return "-".join(list(state.values()))
-
 
 def run():
     """Run the agent for a finite number of trials."""
