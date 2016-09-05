@@ -16,7 +16,7 @@ class LearningAgent(Agent):
         self.color = 'red'  # override color
         self.planner = RoutePlanner(self.env, self)  # simple route planner to get next_waypoint
 
-        # TODO: Initialize any additional variables here
+        # Initialize any additional variables here
         self.actions = [None, 'forward', 'right', 'left'] # available actions
 
         self.q_table = {} # table to hold all of the q^ values
@@ -32,7 +32,7 @@ class LearningAgent(Agent):
 
     def reset(self, destination=None):
         self.planner.route_to(destination)
-        # TODO: Prepare for a new trip; reset any variables here, if required
+        # Prepare for a new trip; reset any variables here, if required
 
     def update(self, t):
         # Gather inputs
@@ -40,16 +40,16 @@ class LearningAgent(Agent):
         deadline = self.env.get_deadline(self)
         inputs = self.env.sense(self)
 
-        # TODO: Update state
+        # Update state
         self.state = self.getState()
 
-        # TODO: Select action according to your policy
+        # Select action according to your policy
         action = self.getPolicy(self.state, self.total_t)
 
         # Execute action and get reward
         reward = self.env.act(self, action)
 
-        # TODO: Learn policy based on state, action, reward
+        # Learn policy based on state, action, reward
         self.updateQ_sa(self.state, action, reward, self.getState(), self.total_t)
 
         self.total_t += 1
@@ -60,7 +60,7 @@ class LearningAgent(Agent):
         next_waypoint = self.planner.next_waypoint()
         inputs = self.env.sense(self)
 
-        # TODO: Update state
+        # Update state
         # Note: Using tuple so that we have a hashable value for the q table.
         return (next_waypoint, inputs['light'], inputs['oncoming'], inputs['left'], inputs['right'])
 
