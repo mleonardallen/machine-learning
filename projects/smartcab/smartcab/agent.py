@@ -82,16 +82,17 @@ class LearningAgent(Agent):
     # Q(s,a) <- (alpha) reward + omega * max a Q(s',a')
     def updateQ_sa(self, state, action, reward, state_prime, t):
 
-        # Q^ <- alpha
         alpha = self.params['alpha'](t)
-        immediate = (1 - alpha) * self.getQ_sa(state, action) + alpha * reward
+        gamma = self.params['gamma'](t)
 
-        # gamma * max a Q^(s', a')
-        discounted_q_prime = self.params['gamma'](t) * max(self.getQ_s(state_prime).values())
+        q_sa = self.getQ_sa(state, action) # current q^
+        q_prime = max(self.getQ_s(state_prime).values()) # next state q^
+
+        # Q(s,a) <- (alpha) reward + omega * max a Q(s',a')
+        q_sa = (1 - alpha) * q_sa + alpha * (reward + gamma * q_prime)
 
         # update q^
-        newValue = immediate + discounted_q_prime
-        self.setQ_sa(state, action, newValue)
+        self.setQ_sa(state, action, q_sa)
 
     # Q(s,a)
     def setQ_sa(self, state, action, value):
