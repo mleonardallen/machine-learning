@@ -94,18 +94,18 @@ class LearningAgent(Agent):
         # update q^
         self.setQ_sa(state, action, q_sa)
 
-    # Q(s,a)
+    # set Q(s,a)
     def setQ_sa(self, state, action, value):
         if state not in self.q_table:
             self.q_table[state] = {}
 
         self.q_table[state][action] = value
 
-    # Q(s,a)
+    # get Q(s,a)
     def getQ_sa(self, state, action):
         return self.q_table[state][action] if state in self.q_table and action in self.q_table[state] else self.params['initial_value']
 
-    # Q(s)
+    # get Q(s)
     def getQ_s(self, state):
         qs = {}
         for action in self.actions:
