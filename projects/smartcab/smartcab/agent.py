@@ -82,8 +82,8 @@ class LearningAgent(Agent):
     # Q(s,a) <- (alpha) reward + omega * max a Q(s',a')
     def updateQ_sa(self, state, action, reward, state_prime, t):
 
-        alpha = self.params['alpha'](t)
-        gamma = self.params['gamma'](t)
+        alpha = self.params['alpha'](t) # learning rate
+        gamma = self.params['gamma'](t) # discount factor
 
         q_sa = self.getQ_sa(state, action) # current q^
         q_prime = max(self.getQ_s(state_prime).values()) # next state q^
@@ -117,7 +117,7 @@ def run():
     """Run the agent for a finite number of trials."""
 
     # Set up environment and agent
-    e = Environment()  # create environment (also adds some dummy traffic)
+    e = Environment(num_dummies=3)  # create environment (also adds some dummy traffic)
     a = e.create_agent(LearningAgent)  # create agent
 
     # a.params = i
